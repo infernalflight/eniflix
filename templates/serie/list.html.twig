@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} :: Series {% endblock %}
+
+{% block body %}
+    <h2>Series</h2>
+
+    <ul>
+        <li><a href="{{ path(app.request.attributes.get('_route')) }}">All</a></li>
+        <li><a href="{{ path(app.request.attributes.get('_route'), {'status' : 'returning'}) }}">Returning</a></li>
+        <li><a href="{{ path(app.request.attributes.get('_route'), {'status' : 'canceled'}) }}">Canceled</a></li>
+        <li><a href="{{ path(app.request.attributes.get('_route'), {'status' : 'ended'}) }}">Ended</a></li>
+    </ul>
+
+    {% if pages_total is defined %}
+        {% if page > 1 %}
+            <a href="{{ path(app.request.attributes.get('_route'),
+                app.request.attributes.get('_route_params')|merge({'page' : page - 1})) }}">
+                Page précédente
+            </a>&nbsp;
+        {% endif %}
+        {% if page < pages_total %}
+            <a href="{{ path(app.request.attributes.get('_route'),
+                app.request.attributes.get('_route_params')|merge({'page' : page + 1})) }}">
+                Page suivante
+            </a>
+        {% endif %}
+    {% endif %}
+
+    <ul>
+    {% for serie in series %}
+        <li><strong>{{ serie.name }} :</strong> {{ serie.overview }} ({{ serie.firstAirDate|date('d/m/Y') }}) <strong>#{{ serie.status }}</strong></li>
+    {% else %}
+        <li>Pas de série</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
