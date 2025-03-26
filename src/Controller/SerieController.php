@@ -19,8 +19,16 @@ final class SerieController extends AbstractController
         $offset = ($page - 1) * $nbParPage;
         $criterias = ['status' => $status];
         $nbTotal = $serieRepository->count($status === 'all' ? [] : $criterias);
-        $series = $serieRepository->findBySeveralCriterias($status, $offset, $nbParPage);
 
+        //$series = $serieRepository->findBy($status !== 'all' ? $criterias : [], ['name' => 'ASC'], $nbParPage, $offset);
+
+        //$series = $serieRepository->findBySeveralCriterias($status, $offset, $nbParPage);
+
+        //$series = $serieRepository->getWithDql($status, $offset, $nbParPage);
+
+        $series = $serieRepository->findWithRawSql($offset, $nbParPage);
+
+          dd($series);
             //$series = $serieRepository->findAll();
             //$series = $serieRepository->findBy([], ['name' => 'ASC'], $nbParPage, $offset);
 
