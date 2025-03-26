@@ -20,7 +20,7 @@ final class SerieController extends AbstractController
         $criterias = ['status' => $status];
         $nbTotal = $serieRepository->count($status === 'all' ? [] : $criterias);
         $series = $serieRepository->findBySeveralCriterias($status, $offset, $nbParPage);
-dd($series);
+
             //$series = $serieRepository->findAll();
             //$series = $serieRepository->findBy([], ['name' => 'ASC'], $nbParPage, $offset);
 

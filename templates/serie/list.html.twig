@@ -4,34 +4,35 @@
 
 {% block body %}
     <h2>Series</h2>
+    <section>
+        <ul>
+            <li><a href="{{ path(app.request.attributes.get('_route')) }}">All</a></li>
+            <li><a href="{{ path(app.request.attributes.get('_route'), {'status' : 'returning'}) }}">Returning</a></li>
+            <li><a href="{{ path(app.request.attributes.get('_route'), {'status' : 'canceled'}) }}">Canceled</a></li>
+            <li><a href="{{ path(app.request.attributes.get('_route'), {'status' : 'ended'}) }}">Ended</a></li>
+        </ul>
 
-    <ul>
-        <li><a href="{{ path(app.request.attributes.get('_route')) }}">All</a></li>
-        <li><a href="{{ path(app.request.attributes.get('_route'), {'status' : 'returning'}) }}">Returning</a></li>
-        <li><a href="{{ path(app.request.attributes.get('_route'), {'status' : 'canceled'}) }}">Canceled</a></li>
-        <li><a href="{{ path(app.request.attributes.get('_route'), {'status' : 'ended'}) }}">Ended</a></li>
-    </ul>
-
-    {% if pages_total is defined %}
-        {% if page > 1 %}
-            <a href="{{ path(app.request.attributes.get('_route'),
-                app.request.attributes.get('_route_params')|merge({'page' : page - 1})) }}">
-                Page précédente
-            </a>&nbsp;
+        {% if pages_total is defined %}
+            {% if page > 1 %}
+                <a href="{{ path(app.request.attributes.get('_route'),
+                    app.request.attributes.get('_route_params')|merge({'page' : page - 1})) }}">
+                    Page précédente
+                </a>&nbsp;
+            {% endif %}
+            {% if page < pages_total %}
+                <a href="{{ path(app.request.attributes.get('_route'),
+                    app.request.attributes.get('_route_params')|merge({'page' : page + 1})) }}">
+                    Page suivante
+                </a>
+            {% endif %}
         {% endif %}
-        {% if page < pages_total %}
-            <a href="{{ path(app.request.attributes.get('_route'),
-                app.request.attributes.get('_route_params')|merge({'page' : page + 1})) }}">
-                Page suivante
-            </a>
-        {% endif %}
-    {% endif %}
+    </section>
 
-    <ul>
-    {% for serie in series %}
-        <li><strong>{{ serie.name }} :</strong> {{ serie.overview }} ({{ serie.firstAirDate|date('d/m/Y') }}) <strong>#{{ serie.status }}</strong></li>
-    {% else %}
-        <li>Pas de série</li>
-    {% endfor %}
-    </ul>
+    <section class="series-list">
+        {% for serie in series %}
+            <img src="{{ asset('uploads/posters/series/' ~ serie.poster) }}" width="300px" loading="lazy" alt="{{ serie.name }}"/>
+        {% else %}
+            <p>Pas de Série !</p>
+        {% endfor %}
+    </section>
 {% endblock %}

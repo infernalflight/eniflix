@@ -1,3 +1,35 @@
 body {
-    background-color: skyblue;
+    background: linear-gradient(#000000, #132135);
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    color: #EEE;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #BC956B;
+}
+
+nav ul {
+    display:flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+nav li {
+    margin-right: 1rem; /*pourcentage de taille en fonction du zoom 1 rem = 10px pour zoom = 100%*/
+    font-size: 150%;
+}
+
+.series-list {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
