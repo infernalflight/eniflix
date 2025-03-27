@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} :: {{ serie.name }}{% endblock %}
+
+
+{% block body %}
+    <h2>Détails de {{ serie.name }}</h2>
+
+    <p><span class="badge bg-info">{{ serie.status }}</span></p>
+
+    <p>{{ serie.overview }}</p>
+
+    <h3>Date de sortie</h3>
+    <p>{{ serie.firstAirDate|date('d/m/Y') }}</p>
+
+    <h3>Genre</h3>
+    <p>{{ serie.genres }}</p>
+
+    <div>
+        <a class="btn btn-primary" href="{{ path('serie_update', {'id' : serie.id}) }}">Modifier</a>
+    </div>
+
+{% endblock %}

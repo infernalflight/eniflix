@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} :: Editer une série{% endblock %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+    <h2>Editer une série</h2>
+
+    {{ form(form) }}
+
+{% endblock %}

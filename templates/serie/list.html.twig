@@ -30,8 +30,10 @@
 
     <section class="series-list">
         {% for serie in series %}
-            <img src="{{ asset('uploads/posters/series/' ~ serie.poster) }}" width="300px" loading="lazy" alt="{{ serie.name }}"/>
-        {% else %}
+            <a href="{{ path('serie_detail', {'id' : serie.id}) }}">
+                <img src="{{ asset('uploads/posters/series/' ~ serie.poster) }}" width="300px" loading="lazy" alt="{{ serie.name }}"/>
+            </a>
+       {% else %}
             <p>Pas de Série !</p>
         {% endfor %}
     </section>

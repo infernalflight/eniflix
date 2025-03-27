@@ -17,8 +17,18 @@
             <nav>
                 <ul>
                    <li style="padding: 5px;"><a href="{{ path('serie_list') }}">Catalogue</a></li>
+                   <li style="padding: 5px;"><a href="{{ path('serie_create') }}">Ajouter une Série</a></li>
                 </ul>
             </nav>
+
+            {% for label, messages in app.flashes %}
+                {%  for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
             {% block body %}{% endblock %}
         </div>
     </body>
