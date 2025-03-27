@@ -67,7 +67,8 @@ class SerieRepository extends ServiceEntityRepository
     {
         $sql = "SELECT * FROM serie s 
          WHERE (s.genres LIKE :genre1 OR s.genres LIKE :genre2)
-         AND s.first_air_date >= :dateSeuil";
+         AND s.first_air_date >= :dateSeuil
+         LIMIT $nbParPage OFFSET $offset";
 
         return $this->getEntityManager()->getConnection()
             ->prepare($sql)
@@ -75,8 +76,6 @@ class SerieRepository extends ServiceEntityRepository
                 'genre1' => '%mystery%',
                 'genre2' => '%drama%',
                 'dateSeuil' => (new \DateTime('-6 years'))->format('Y-m-d'),
-      //s          'nbParPage' => $nbParPage,
-     //           'offset' => $offset,
             ])
             ->fetchAllAssociative();
 
