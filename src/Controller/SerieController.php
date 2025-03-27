@@ -20,19 +20,20 @@ final class SerieController extends AbstractController
         $criterias = ['status' => $status];
         $nbTotal = $serieRepository->count($status === 'all' ? [] : $criterias);
 
-        //$series = $serieRepository->findBy($status !== 'all' ? $criterias : [], ['name' => 'ASC'], $nbParPage, $offset);
+        // Méthode héritée du Repository
+        $series = $serieRepository->findBy($status !== 'all' ? $criterias : [], ['name' => 'ASC'], $nbParPage, $offset);
 
+        // Méthode custom QueryBuilder
         //$series = $serieRepository->findBySeveralCriterias($status, $offset, $nbParPage);
 
+        // Méthode avec DQL
         //$series = $serieRepository->getWithDql($status, $offset, $nbParPage);
 
-        $series = $serieRepository->findWithRawSql($offset, $nbParPage);
+        // Méthode avec Raw SQL
+        //$series = $serieRepository->findWithRawSql($offset, $nbParPage);
 
-          dd($series);
-            //$series = $serieRepository->findAll();
-            //$series = $serieRepository->findBy([], ['name' => 'ASC'], $nbParPage, $offset);
-
-            //$series = $serieRepository->findBy($criterias, ['name' => 'ASC'], $nbParPage, $offset);
+        // Méthode héritée = Prendre toute la table
+        //$series = $serieRepository->findAll();
 
         return $this->render('serie/list.html.twig', [
             'series' => $series,
