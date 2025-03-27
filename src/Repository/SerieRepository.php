@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Serie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use http\Env\Response;
 
 /**
  * @extends ServiceEntityRepository<Serie>
@@ -65,7 +64,7 @@ class SerieRepository extends ServiceEntityRepository
 
     public function findWithRawSql(int $offset, int $nbParPage): array
     {
-        $sql = "SELECT * FROM serie s 
+        $sql = "SELECT * FROM serie_old s 
          WHERE (s.genres LIKE :genre1 OR s.genres LIKE :genre2)
          AND s.first_air_date >= :dateSeuil
          LIMIT $nbParPage OFFSET $offset";
