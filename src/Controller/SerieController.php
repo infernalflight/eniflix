@@ -64,7 +64,7 @@ final class SerieController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // inutile car confié au LifeCycleCallback de l'entité
             //$serie->setDateCreated(new \DateTime());
             $em->persist($serie);
@@ -87,7 +87,7 @@ final class SerieController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // inutile car confié au LifeCycleCallback de l'entité
             //$serie->setDateModified(new \DateTime());
 

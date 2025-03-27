@@ -5,9 +5,13 @@ namespace App\Entity;
 use App\Repository\SerieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SerieRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ORM\UniqueConstraint(columns: ['name', 'first_air_date'])]
+#[UniqueEntity(fields: ['name', 'firstAirDate'], message: 'Cette série existe déja')]
 class Serie
 {
 
@@ -17,15 +21,22 @@ class Serie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 3, max: 15,
+        minMessage: 'Ce nom est trop court. min: {{ limit }} caractères',
+        maxMessage: 'Ce nom est trop long. max: {{ limit }} caractères'
+    )]
+    #[Assert\NotBlank(message: 'Remplis ce champs !!!!')]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $overview = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Choice(choices: ['canceled', 'ended', 'returning'], message: 'Ce choix n\'est pas correct')]
     private ?string $status = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(min: 0, max: 10, minMessage: '')]
     private ?float $vote = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
@@ -41,9 +52,11 @@ class Serie
     private ?string $poster = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\LessThan('today')]
     private ?\DateTimeInterface $firstAirDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\GreaterThan(propertyPath: 'firstAirDate')]
     private ?\DateTimeInterface $lastAirDate = null;
 
     #[ORM\Column(nullable: true)]
@@ -65,7 +78,7 @@ class Serie
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 

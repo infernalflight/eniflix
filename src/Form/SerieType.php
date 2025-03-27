@@ -20,10 +20,10 @@ class SerieType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom de la serie',
-                'required' => true,
+                'required' => false,
                 'row_attr' => [
                     'class' => 'input-group mb-3',
-                ]
+                ],
             ])
             ->add('overview', TextareaType::class)
             ->add('status', ChoiceType::class, [
