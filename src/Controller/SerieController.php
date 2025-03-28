@@ -7,9 +7,11 @@ use App\Form\SerieType;
 use App\Repository\SerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/serie', name: 'serie')]
 final class SerieController extends AbstractController
@@ -57,7 +59,7 @@ final class SerieController extends AbstractController
 
 
     #[Route('/create', name: '_create')]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
         $serie = new Serie();
         $form = $this->createForm(SerieType::class, $serie);
@@ -67,6 +69,15 @@ final class SerieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // inutile car confié au LifeCycleCallback de l'entité
             //$serie->setDateCreated(new \DateTime());
+
+            // Gestion upload
+            $file = $form->get('poster_file')->getData();
+            if ($file instanceof UploadedFile) {
+                $name = $slugger->slug($serie->getName()).'-'.uniqid().'.'.$file->guessExtension();
+                $file->move('uploads/posters/series', $name);
+                $serie->setPoster($name);
+            }
+
             $em->persist($serie);
             $em->flush();
 
@@ -81,7 +92,7 @@ final class SerieController extends AbstractController
     }
 
     #[Route('/update/{id}', name: '_update', requirements: ['id' => '\d+'])]
-    public function update(Request $request, EntityManagerInterface $em, Serie $serie): Response
+    public function update(Request $request, EntityManagerInterface $em, Serie $serie, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(SerieType::class, $serie);
 
@@ -90,6 +101,18 @@ final class SerieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // inutile car confié au LifeCycleCallback de l'entité
             //$serie->setDateModified(new \DateTime());
+
+            // Gestion upload
+            $file = $form->get('poster_file')->getData();
+            if ($file instanceof UploadedFile) {
+                $name = $slugger->slug($serie->getName()).'-'.uniqid().'.'.$file->guessExtension();
+                $file->move('uploads/posters/series', $name);
+                if ($serie->getPoster()) {
+                    unlink('uploads/posters/series/'.$serie->getPoster());
+                }
+                $serie->setPoster($name);
+            }
+
 
             $isImportant = $form->get('is_important')->getData();
 

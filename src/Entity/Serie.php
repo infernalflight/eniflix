@@ -44,7 +44,6 @@ class Serie
     private ?string $popularity = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min: 3 , max: 15)]
     private ?string $genres = null;
 
     #[ORM\Column(length: 255, nullable: true)]

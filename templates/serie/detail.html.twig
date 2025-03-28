@@ -4,6 +4,13 @@
 
 
 {% block body %}
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0,0,0, 0.5), rgba(0,0,0,0.9)),
+            url("{{ asset('uploads/backdrops/' ~ serie.backdrop) }}");
+        }
+    </style>
+
     <h2>Détails de {{ serie.name }}</h2>
 
     <p><span class="badge bg-info">{{ serie.status }}</span></p>
