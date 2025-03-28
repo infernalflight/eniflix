@@ -37,7 +37,12 @@ class SerieType extends AbstractType
             ])
             ->add('vote')
             ->add('popularity')
-            ->add('genres')
+            ->add('genres', TextType::class, [
+                'attr' => [
+                    'pattern' => '{3,}',
+                    'maxlength' => 15,
+                ]
+            ])
             ->add('backdrop')
             ->add('poster')
             ->add('firstAirDate', DateType::class, [

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SerieRepository;
+use Composer\Semver\Constraint\Constraint;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -36,13 +37,14 @@ class Serie
     private ?string $status = null;
 
     #[ORM\Column(nullable: true)]
-    #[Assert\Range(min: 0, max: 10, minMessage: '')]
+    #[Assert\Range(min: 0, max: 10, notInRangeMessage: 'Ce nombre doit etre compris entre 0 et 10')]
     private ?float $vote = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
     private ?string $popularity = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 3 , max: 15)]
     private ?string $genres = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -57,6 +59,18 @@ class Serie
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     #[Assert\GreaterThan(propertyPath: 'firstAirDate')]
+    #[Assert\When(
+        expression: 'this.getStatus() == "ended" || this.getStatus() == "canceled"',
+        constraints: [
+            new Assert\NotBlank(message: 'Ce champ est obligatoire'),
+        ]
+    )]
+    #[Assert\When(
+        expression: 'this.getStatus() == "returning"',
+        constraints: [
+            new Assert\Blank(message: 'Ce champ ne doit pas être rempli si le status est à En cours'),
+        ]
+    )]
     private ?\DateTimeInterface $lastAirDate = null;
 
     #[ORM\Column(nullable: true)]
