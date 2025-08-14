@@ -42,6 +42,24 @@ final class SerieController extends AbstractController
         );
     }
 
+    #[Route('/liste-custom', name: '_custom_list')]
+    public function listCustom(SerieRepository $serieRepository): Response
+    {
+        //$series = $serieRepository->findSeriesCustom(400, 8);
+        $series = $serieRepository->findSeriesWithDQL(400, 8);
+
+        // Le requêtage SQL raw nécessite qu'on adapte le template (firstAirDate -> first_air_date)
+        //$series = $serieRepository->findSeriesWithSQL(400, 8);
+
+        return $this->render('serie/list.html.twig', [
+            'series' => $series,
+            'page' => 1,
+            'total_pages' => 10,
+        ]);
+    }
+
+
+
     #[Route('/detail/{id}', name: '_detail')]
     public function detail(int $id, SerieRepository $serieRepository): Response
     {
