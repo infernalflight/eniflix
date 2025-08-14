@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Catalogue{% endblock %}
+
+{% block body %}
+    <h2>Catalogue</h2>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>status</th>
+            <th>vote</th>
+            <th>popularity</th>
+            <th>First air date</th>
+            <th>Last air date</th>
+        </tr>
+    {% for serie in series %}
+        <tr>
+            <td>{{ serie.id }}</td>
+            <td>{{ serie.name }}</td>
+            <td>{{ serie.status }}</td>
+            <td>{{ serie.vote }}</td>
+            <td>{{ serie.popularity }}</td>
+            <td>{{ serie.firstAirDate|date('d/m/Y') }}</td>
+            <td>{{ serie.lastAirDate ? serie.lastAirDate|date('d/m/Y') : '' }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}
