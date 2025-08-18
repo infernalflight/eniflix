@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme serie_form 'bootstrap_5_layout.html.twig' %}
+
+{% block body %}
+    <h1>Editer une Série</h1>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            {{ form(serie_form) }}
+        </div>
+    </div>
+{% endblock %}
