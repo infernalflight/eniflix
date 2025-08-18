@@ -19,6 +19,15 @@
                 <li><a href="{{ path('serie_list') }}">Catalogue</a></li>
             </ul>
         </nav>
+
+        {% for type, messages in app.flashes %}
+            {%  for message in messages %}
+                <div class="alert alert-{{ type }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         {% block body %}{% endblock %}
     </body>
 </html>
