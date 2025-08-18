@@ -20,8 +20,8 @@ final class SerieController extends AbstractController
         $nbPerPage = $parameters->get('serie')['nb_max'];
         $offset = ($page - 1) * $nbPerPage;
         $criterias = [
-            'status' => 'Returning',
-            'genre' => 'Drama',
+//            'status' => 'Returning',
+//            'genre' => 'Drama',
         ];
 
         $series = $serieRepository->findBy(

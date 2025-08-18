@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)),
+            url("{{ asset('uploads/backdrops/' ~ serie.backdrop) }}")
+        }
+    </style>
+
     <h2>Serie {{ serie.name }}</h2>
 
     <span>Genre: {{ serie.genre }}</span><br>

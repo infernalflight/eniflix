@@ -14,35 +14,14 @@
         {% endif %}
     </section>
 
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>status</th>
-            <th>genre</th>
-            <th>vote</th>
-            <th>popularity</th>
-            <th>First air date</th>
-            <th>Last air date</th>
-            <th></th>
-        </tr>
+    <section class="series-list">
         {% for serie in series %}
-            <tr>
-                <td>{{ serie.id }}</td>
-                <td>{{ serie.name }}</td>
-                <td>{{ serie.status }}</td>
-                <td>{{ serie.genre }}</td>
-                <td>{{ serie.vote }}</td>
-                <td>{{ serie.popularity }}</td>
-                <td>{{ serie.firstAirDate|date('d/m/Y') }}</td>
-                <td>{{ serie.lastAirDate ? serie.lastAirDate|date('d/m/Y') : '' }}</td>
-                <td><a href="{{ path('serie_detail', { id: serie.id }) }}">Voir</a></td>
-            </tr>
+            <a href="{{ path('serie_detail', { id : serie.id }) }}">
+                <img src="{{ asset('uploads/posters/series/' ~ serie.poster) }}" width="250px" alt="{{ 'Poster de ' ~ serie.name }}" loading="lazy">
+            </a>
         {% else %}
-            <tr>
-                <td>Pas de données</td>
-            </tr>
+            <p>Pas de série</p>
         {% endfor %}
-    </table>
+    </section>
 
 {% endblock %}
