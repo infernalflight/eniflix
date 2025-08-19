@@ -6,7 +6,7 @@
 parameters:
     serie:
         nb_max: 10
-
+        poster_directory: 'uploads/posters/series'
 services:
     # default configuration for services in *this* file
     _defaults:
