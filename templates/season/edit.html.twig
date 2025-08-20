@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Editer une saison{% endblock %}
+
+{% block body %}
+    {%  if mode == 'create' %}
+        <h1>Créer une nouvelle saison</h1>
+    {% else %}
+        <h1>Mettre à jour la saison</h1>
+    {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-6">
+            {{ form(season_form) }}
+        </div>
+    </div>
+{% endblock %}
