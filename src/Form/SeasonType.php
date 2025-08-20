@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Season;
 use App\Entity\Serie;
+use App\Repository\SerieRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -20,11 +21,18 @@ class SeasonType extends AbstractType
             ->add('overview')
             ->add('tmdbId')
             ->add('poster')
-            ->add('dateCreated')
-            ->add('dateModified')
             ->add('serie', EntityType::class, [
+                'placeholder' => '-- Choose a Serie --',
                 'class' => Serie::class,
-                'choice_label' => 'id',
+                'choice_label' => function (Serie $serie) {
+                    return sprintf('%s (%s)', $serie->getName(), count($serie->getSeasons()));
+                },
+                'query_builder' => function (SerieRepository $repo) {
+                    return $repo->createQueryBuilder('s')
+                        ->addSelect('seasons')
+                        ->leftJoin('s.seasons', 'seasons')
+                        ->orderBy('s.name', 'ASC');
+                }
             ])
             ->add('submit', SubmitType::class, [])
         ;
