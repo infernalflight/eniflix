@@ -25,6 +25,8 @@ security:
                 # where to redirect after logout
                 # target: app_any_route
 
+            user_checker: App\Security\UserChecker
+
     role_hierarchy:
         ROLE_ADMIN: [ROLE_MODERATEUR]
         ROLE_MODERATEUR: ['ROLE_TRUC', 'ROLE_MACHIN']
